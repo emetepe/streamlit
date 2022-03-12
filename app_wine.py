@@ -7,11 +7,11 @@ from sklearn.ensemble import RandomForestClassifier
 #app heading
 st.write("""
 # Análisis de la calidad del vino tinto.
-This app predicts the ***Wine Quality*** type!
+Esta app predice la calidad del vino.
 """)
 
 #creating sidebar for user input features
-st.sidebar.header('User Input Parameters')
+st.sidebar.header('Parámetros de entrada')
   
 def user_input_features():
         fixed_acidity = st.sidebar.slider('fixed acidity', 4.6, 15.9, 8.31)
