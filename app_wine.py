@@ -6,8 +6,8 @@ from sklearn.ensemble import RandomForestClassifier
 
 #app heading
 st.write("""
-# Análisis de la calidad del vino tinto.
-Esta app predice la calidad del vino.
+# Análisis de la calidad del vino tinto
+¡Con esta app puedes predecir la calidad del vino que vas a tomar!
 """)
 
 #creating sidebar for user input features
@@ -32,7 +32,7 @@ def user_input_features():
         return features
 df = user_input_features()
 
-st.subheader('User Input parameters')
+st.subheader('Parámetros de entradas del usuario')
 st.write(df)
 
 #reading csv file
@@ -43,14 +43,14 @@ Y = np.array(data['quality'])
 #random forest model
 rfc= RandomForestClassifier()
 rfc.fit(X, Y)
-st.subheader('Wine quality labels and their corresponding index number')
+st.subheader('Etiquetas de la calidad de vino y su correspondiente índice')
 st.write(pd.DataFrame({
-   'wine quality': [3, 4, 5, 6, 7, 8 ]}))
+   'Calidad del vino': [3, 4, 5, 6, 7, 8 ]}))
 
 prediction = rfc.predict(df)
 prediction_proba = rfc.predict_proba(df)
-st.subheader('Prediction')
+st.subheader('Predicción')
 st.write(prediction)
 
-st.subheader('Prediction Probability')
+st.subheader('Predicción de probabilidad')
 st.write(prediction_proba)
