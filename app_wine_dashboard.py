@@ -4,6 +4,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
+import warnings
+warnings.filterwarnings("ignore")
 
 #app heading
 st.write("""
@@ -58,7 +60,6 @@ st.write(prediction_proba)
 
 ####
 
-import cufflinks as cf
 import warnings
 warnings.filterwarnings("ignore")
 
