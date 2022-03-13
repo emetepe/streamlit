@@ -1,8 +1,8 @@
 #import libraries
+import cufflinks as cf
 import streamlit as st
 import pandas as pd
 import numpy as np
-import cufflinks as cf
 from sklearn.ensemble import RandomForestClassifier
 
 #app heading
