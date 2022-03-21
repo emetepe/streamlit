@@ -1,16 +1,13 @@
 #import libraries
-import cufflinks as cf
 import streamlit as st
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
-import warnings
-warnings.filterwarnings("ignore")
 
 #app heading
 st.write("""
 # Análisis de la calidad del vino tinto.
-This app predicts the ***Wine Quality*** type!
+¡Esta app predice la ***calidad del vino*** que vas a tomar!
 """)
 
 #creating sidebar for user input features
@@ -60,26 +57,27 @@ st.write(prediction_proba)
 
 ####
 
+import cufflinks as cf
 import warnings
 warnings.filterwarnings("ignore")
 
 ####### Load Dataset #####################
 
-# wine = load_wine()
+wine = load_wine()
 
-# wine_df = pd.DataFrame(data=wine.data, columns=wine.feature_names)
+wine_df = pd.DataFrame(data=wine.data, columns=wine.feature_names)
 
-# wine_df["WineType"] = [wine.target_names[t] for t in wine.target ]
+wine_df["WineType"] = [wine.target_names[t] for t in wine.target ]
 
-# st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 
-# st.markdown("## Wine Dataset Analysis")   ## Main Title
+st.markdown("## Wine Dataset Analysis")   ## Main Title
 
 ################# Scatter Chart Logic #################
 
 st.sidebar.markdown("### Scatter Chart: Explore Relationship Between Ingredients :")
 
-ingredients = data.drop(labels=["WineType"], axis=1).columns.tolist()
+ingredients = data.drop(labels=["quality"], axis=1).columns.tolist()
 
 x_axis = st.sidebar.selectbox("X-Axis", ingredients)
 y_axis = st.sidebar.selectbox("Y-Axis", ingredients, index=1)
@@ -87,7 +85,7 @@ y_axis = st.sidebar.selectbox("Y-Axis", ingredients, index=1)
 if x_axis and y_axis:
     scatter_fig = data.iplot(kind="scatter", x=x_axis, y=y_axis,
                     mode="markers",
-                    categories="WineType",
+                    categories="quality",
                     asFigure=True, opacity=1.0,
                     xTitle=x_axis.replace("_"," ").capitalize(), yTitle=y_axis.replace("_"," ").capitalize(),
                     title="{} vs {}".format(x_axis.replace("_"," ").capitalize(), y_axis.replace("_"," ").capitalize()),
@@ -98,25 +96,25 @@ if x_axis and y_axis:
 
 ########## Bar Chart Logic ##################
 
-st.sidebar.markdown("### Bar Chart: Average Ingredients Per Wine Type : ")
+st.sidebar.markdown("### Bar Chart: Average Ingredients Per Wine Quality: ")
 
-avg_wine_df = data.groupby(by=["WineType"]).mean()
+avg_wine_df = data.groupby(by=["quality"]).mean()
 
 bar_axis = st.sidebar.multiselect(label="Bar Chart Ingredient", options=avg_wine_df.columns.tolist(), default=["alcohol","malic_acid"])
 
 if bar_axis:
     bar_fig = avg_wine_df[bar_axis].iplot(kind="bar",
                         barmode="stack",
-                        xTitle="Wine Type",
-                        title="Distribution of Average Ingredients Per Wine Type",
+                        xTitle="Wine Quality",
+                        title="Distribution of Average Ingredients Per Wine Quality",
                         asFigure=True,
                         opacity=1.0,
                         );
 else:
     bar_fig = avg_wine_df[["alcohol"]].iplot(kind="bar",
                         barmode="stack",
-                        xTitle="Wine Type",
-                        title="Distribution of Average Alcohol Per Wine Type",
+                        xTitle="Wine Quality",
+                        title="Distribution of Average Alcohol Per Wine Quality",
                         asFigure=True,
                         opacity=1.0,
                         );
@@ -152,7 +150,7 @@ else:
 
 wine_cnt = data.groupby(by=["WineType"]).count()[['alcohol']].rename(columns={"alcohol":"Count"}).reset_index()
 
-pie_fig = wine_cnt.iplot(kind="pie", labels="WineType", values="Count",
+pie_fig = wine_cnt.iplot(kind="pie", labels="quality", values="Count",
                          title="Wine Samples Distribution Per WineType",
                          hole=0.4,
                          asFigure=True)
